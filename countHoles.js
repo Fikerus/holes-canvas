@@ -50,7 +50,7 @@ function countHoles(pixels){
       }
     }
     areas.map(area => {
-      if (area < 10){
+      if (area < 4){
         count -= 1
       }
     })
