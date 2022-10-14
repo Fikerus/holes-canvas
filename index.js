@@ -4,12 +4,13 @@ const input = document.getElementById('input')
 const button = document.getElementById('button')
 const result = document.getElementById('result')
 
-const font = '30px monospace'
+const fontSize = 50
+const font = `${fontSize}px monospace`
 ctx.font = font
 const offset = 20
 
-ctx.canvas.width = 40
-ctx.canvas.height = 40
+ctx.canvas.width = 100
+ctx.canvas.height = 100
 
 function getPixels(ctx, width, height){
     const data = []
@@ -41,7 +42,7 @@ function updateButton(){
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, width, height)
     ctx.fillStyle = "black"
-    ctx.fillText(text, offset/2, height/2 + 5)
+    ctx.fillText(text, offset/2, height/2 + fontSize/2 - 10)
 
     const data = getPixels(ctx, width, height)
 
