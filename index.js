@@ -18,7 +18,7 @@ function getPixels(ctx, width, height){
         const row = []
         for (let x=0; x<width; ++x){
             let pixel = ctx.getImageData(x, y, 1, 1).data[0]
-            row.push(pixel < 255 ? 0 : 255)
+            row.push(pixel < 128 ? 0 : 255)
         }
         data.push(row)
     }
