@@ -2,10 +2,15 @@ function countHoles(pixels){
     const visited = pixels.map(arr => arr.map(() => false))
     let count = 0
     const stack = []
+    const areas = []
     function DFS(x, y){
       if (y < 0 || y >= pixels.length || x < 0 || x >= pixels[0].length || visited[y][x] || pixels[y][x] === 0){
         return
       }
+
+      if (areas.length)
+        areas[areas.length-1] += 1
+
       visited[y][x] = true
 
       if (paint){
@@ -37,11 +42,17 @@ function countHoles(pixels){
       for (let x=0; x<pixels[0].length; ++x){
         if(!visited[y][x]){
           if (pixels[y][x]===255){
+            areas.push(0)
             count += 1
           }
           execDFS(x, y)
         }
       }
     }
+    areas.map(area => {
+      if (area < 10){
+        count -= 1
+      }
+    })
     return count
   }
