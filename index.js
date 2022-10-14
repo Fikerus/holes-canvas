@@ -4,14 +4,28 @@ const input = document.getElementById('input')
 const button = document.getElementById('button')
 const result = document.getElementById('result')
 
-const fontSize = 50
+const fontSize = 200
 const font = `${fontSize}px monospace`
 ctx.font = font
 const offset = 20
 
 ctx.canvas.width = 100
-ctx.canvas.height = 100
+ctx.canvas.height = 500
 
+function getImage(ctx, width, height){
+    const rawdata = ctx.getImageData(0, 0, width, height).data
+    // console.log(rawdata)
+    const data = []
+    for (let y=0; y<height; ++y){
+        const row = []
+        for (let x=0; x<width; ++x){
+            row.push(rawdata[(y*width + x) * 4] < 128 ? 0 : 255)
+        }
+        data.push(row)
+    }
+    return data
+}
+// Old and bad function
 function getPixels(ctx, width, height){
     const data = []
     for (let y=0; y<height; ++y){
@@ -42,9 +56,9 @@ function updateButton(){
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, width, height)
     ctx.fillStyle = "black"
-    ctx.fillText(text, offset/2, height/2 + fontSize/2 - 10)
+    ctx.fillText(text, offset/2, height/2 + 50)
 
-    const data = getPixels(ctx, width, height)
+    const data = getImage(ctx, width, height)
 
     result.textContent = countHoles(data)
 }
