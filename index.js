@@ -1,5 +1,5 @@
 const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
+const ctx = canvas.getContext('2d', {alpha: false})
 const input = document.getElementById('input')
 const button = document.getElementById('button')
 const result = document.getElementById('result')
