@@ -4,13 +4,13 @@ const input = document.getElementById('input')
 const button = document.getElementById('button')
 const result = document.getElementById('result')
 
-const fontSize = 200
-const font = `${fontSize}px monospace`
+const fontSize = 1500
+const font = `${fontSize}px arial`
 ctx.font = font
 const offset = 20
 
-ctx.canvas.width = 100
-ctx.canvas.height = 500
+ctx.canvas.width = 500
+ctx.canvas.height = 2000
 
 function getImage(ctx, width, height){
     const rawdata = ctx.getImageData(0, 0, width, height).data
@@ -43,7 +43,7 @@ button.addEventListener('click', updateButton)
 
 function updateButton(){
     ctx.font = font
-    let text = input.value
+    let text = input.value.split("").join(String.fromCharCode(8202))
     const textWidth = ctx.measureText(text).width
 
     ctx.canvas.width = Math.ceil(textWidth) + offset
@@ -56,7 +56,7 @@ function updateButton(){
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, width, height)
     ctx.fillStyle = "black"
-    ctx.fillText(text, offset/2, height/2 + 50)
+    ctx.fillText(text, offset/2, height/2 + 500)
 
     const data = getImage(ctx, width, height)
 
