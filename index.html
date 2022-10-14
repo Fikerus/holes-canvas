@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #canvas {
+            outline: black 3px solid;
+        }
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="countHoles.js"></script>
+    <script defer src="index.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div>
+            <input type="text" id="input" value="Привет мир!">
+            <input type="button" id="button" value="Count holes">
+        </div>
+        <div style="height: 20px;"></div>
+        <div>
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+    <div>
+        <h1 id="result"></h1>
+    </div>
+</body>
+</html>
