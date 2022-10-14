@@ -12,6 +12,13 @@ const offset = 20
 ctx.canvas.width = 500
 ctx.canvas.height = 500
 
+input.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      button.click()
+    }
+})
+
 function getImage(ctx, width, height){
     const rawdata = ctx.getImageData(0, 0, width, height).data
     // console.log(rawdata)
