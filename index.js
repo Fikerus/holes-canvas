@@ -12,6 +12,9 @@ const offset = 20
 ctx.canvas.width = 500
 ctx.canvas.height = 500
 
+ctx.fillStyle = 'white'
+ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
 input.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
       event.preventDefault()
