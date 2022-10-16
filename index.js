@@ -41,6 +41,7 @@ worker.onmessage = (event) => {
 }
 
 input.oninput = () => {
+    result.textContent = `Number of holes: ${0}`
     let text = input.value
 
     worker.postMessage({message: 'text', text: text})
