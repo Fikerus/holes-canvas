@@ -1,5 +1,5 @@
-const w = 400
-const h = 400
+const w = 100
+const h = 100
 
 let ctx = null
 let font = null
@@ -19,10 +19,14 @@ onmessage = (event) => {
     if (message === 'text') {
         ctx.font = font
         let text = data.text.split('').join(String.fromCharCode(8202))
-        const textWidth = ctx.measureText(text).width
+        const metrics = ctx.measureText(text)
+        const textWidth = metrics.width
+        const textHeight = Math.max(metrics.actualBoundingBoxAscent, metrics.actualBoundingBoxDescent) * 2
+        console.log(textWidth)
+        console.log(textHeight)
 
         ctx.canvas.width = Math.ceil(textWidth) + offset
-        ctx.canvas.height = h
+        ctx.canvas.height = Math.ceil(textHeight) + offset
 
         ctx.font = font
 
@@ -38,11 +42,11 @@ onmessage = (event) => {
         postMessage({message: 'resize', width: width})
     }
     if (message === 'count') {
-        // console.time('test')
+        console.time('test')
         const pixels = getPixels(ctx, ctx.canvas.width, ctx.canvas.height)
         let result = countHoles(pixels)
         postMessage({message: 'completed', count: result})
-        // console.timeEnd('test')
+        console.timeEnd('test')
     }
 }
 
