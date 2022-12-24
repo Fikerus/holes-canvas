@@ -8,13 +8,10 @@ const fontSize = 200
 const font = `${fontSize}px arial`
 const offset = 20
 
-// TODO:
-// Test button before completed (+) (seems okay)
-// Add progress bar
-// Add filling before (seems impossible)
-
-progress.canvas.width = 50
+progress.canvas.width = 610
 progress.canvas.height = 50
+fillAndDrawPercentage(progress, 0)
+
 
 const offscreen = canvas.transferControlToOffscreen()
 const worker = new Worker('worker.js')
@@ -24,20 +21,12 @@ worker.onmessage = (event) => {
     const data = event.data
     if (data.message === 'completed') {
         result.textContent = `Number of holes: ${data.count}`
-    }
-    if (data.message === 'resize') {
-        progress.canvas.width = data.width
 
-        progress.font = '40px arial'
-        progress.fillStyle = 'black'
-        progress.textAlign = 'center'
-        progress.textBaseline = 'middle'
-        progress.fillText('I will add progress bar in future version, sorry <3', progress.canvas.width / 2, progress.canvas.height / 2)
+        fillAndDrawPercentage(progress, 100)
     }
-    // if (data.message === 'progress') {
-    //     console.log(data.percent)
-    //     progress.fillRect(0, 0, data.percent * progress.canvas.width, progress.canvas.height)
-    // }
+    if (data.message === 'percentage') {
+        fillAndDrawPercentage(progress, data.percentage)
+    }
 }
 
 input.oninput = () => {
@@ -45,6 +34,7 @@ input.oninput = () => {
     let text = input.value
 
     worker.postMessage({message: 'text', text: text})
+    fillAndDrawPercentage(progress, 0)
 }
 
 input.oninput()
@@ -60,4 +50,16 @@ button.onclick = () => {
     input.oninput()
 
     worker.postMessage({message: 'count'})
+}
+
+function fillAndDrawPercentage(ctx, percentage) {
+    ctx.fillStyle = 'white'
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.fillStyle = 'lime'
+    ctx.fillRect(0, 0, percentage / 100 * progress.canvas.width, progress.canvas.height)
+    ctx.fillStyle = 'black'
+    ctx.font = '40px arial'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText(`${percentage}%`, progress.canvas.width / 2, progress.canvas.height / 2)
 }

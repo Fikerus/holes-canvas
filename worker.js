@@ -38,8 +38,6 @@ onmessage = (event) => {
         ctx.fillStyle = 'black'
         ctx.textBaseline = 'middle'
         ctx.fillText(text, offset/2, height/2)
-
-        postMessage({message: 'resize', width: width})
     }
     if (message === 'count') {
         console.time('test')
@@ -75,7 +73,7 @@ function countHoles(pixels){
         }
 
         if (areas.length)
-            areas[areas.length-1] += 1
+        areas[areas.length-1] += 1
 
         visited[y][x] = true
 
@@ -104,12 +102,19 @@ function countHoles(pixels){
 
     paint = true
 
+    let lastPercentage = 0
     for (let y=0; y<pixels.length; ++y){
         for (let x=0; x<pixels[0].length; ++x){
             if(!visited[y][x]){
                 if (pixels[y][x]===255){
                     areas.push(0)
                     count += 1
+                }
+
+                let percentage = Math.floor((x + y * pixels[0].length) / (pixels.length * pixels[0].length) * 100)
+                if (lastPercentage < percentage) {
+                    lastPercentage = percentage
+                    postMessage({message: 'percentage', percentage: lastPercentage})
                 }
                 execDFS(x, y)
             }
